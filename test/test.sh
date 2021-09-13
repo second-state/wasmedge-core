@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
+
 set -xe
+
+SUDO=
+[ "$GITHUB_ACTIONS" == true ] && SUDO=sudo
+
 rustwasmc build
 cd pkg
-npm install ../..
-sed -i "s/require('ssvm')/require('wasmedge-core')/" integers_lib.js
+$SUDO npm install ../..
 cd -
 mocha js
 rustwasmc clean

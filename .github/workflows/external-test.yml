@@ -21,25 +21,21 @@ jobs:
         node-version: [10.x, 12.x, 14.x]
         include:
         - node-version: '14.x'
-          ssvm-options: '--enable-aot'
+          rustwasmc-options: '--enable-aot'
 
     steps:
-    # MAGIC: Checkout wasm-learning at $GITHUB_WORKSPACE so that node
-    #        module search will find 'ssvm' from inside the testdirs.
+    - uses: actions/checkout@v2
+
     - name: Checkout wasm-learning
       uses: actions/checkout@v2
       with:
         repository: second-state/wasm-learning
+        path: wasm-learning
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-
-    - name: Checkout wasmedge-core
-      uses: actions/checkout@v2
-      with:
-        path: wasmedge-core
 
     - name: Set Rust to required version
       uses: actions-rs/toolchain@v1
@@ -49,44 +45,45 @@ jobs:
 
     - name: Install dependencies
       run: |
+        apt update && apt install -y sudo
         npm install --unsafe-perm -g rustwasmc
+        ln -s $(which node) /usr/local/bin/node
+        ln -s $(which npm) /usr/local/bin/npm
 
     - name: Build and install wasmedge-core
-      uses: './wasmedge-core/.github/actions/build-from-source'
-      with:
-        path: './wasmedge-core'
+      uses: './.github/actions/build-from-source'
 
-    - name: Test functions ${{ matrix.ssvm-options }}
+    - name: Test functions ${{ matrix.rustwasmc-options }}
       run: |
-        rustwasmc build ${{ matrix.ssvm-options }}
-        sed -i "s/require('ssvm')/require('wasmedge-core')/" pkg/*.js
+        rustwasmc build ${{ matrix.rustwasmc-options }}
+        cd pkg && sudo npm i ${GITHUB_WORKSPACE} && cd ..
         node node/app.js
         rustwasmc clean
-      working-directory: nodejs/functions
+      working-directory: wasm-learning/nodejs/functions
 
-    - name: Test JSON IO ${{ matrix.ssvm-options }}
+    - name: Test JSON IO ${{ matrix.rustwasmc-options }}
       run: |
-        rustwasmc build ${{ matrix.ssvm-options }}
-        sed -i "s/require('ssvm')/require('wasmedge-core')/" pkg/*.js
+        rustwasmc build ${{ matrix.rustwasmc-options }}
+        cd pkg && sudo npm i ${GITHUB_WORKSPACE} && cd ..
         node node/app.js
         rustwasmc clean
-      working-directory: nodejs/json_io
+      working-directory: wasm-learning/nodejs/json_io
 
-    - name: Test WASI ${{ matrix.ssvm-options }}
+    - name: Test WASI ${{ matrix.rustwasmc-options }}
       run: |
-        rustwasmc build ${{ matrix.ssvm-options }}
-        sed -i "s/require('ssvm')/require('wasmedge-core')/" pkg/*.js
+        rustwasmc build ${{ matrix.rustwasmc-options }}
+        cd pkg && sudo npm i ${GITHUB_WORKSPACE} && cd ..
         node node/app.js
         rustwasmc clean
-      working-directory: nodejs/wasi
+      working-directory: wasm-learning/nodejs/wasi
 
-    - name: Test KMeans ${{ matrix.ssvm-options }}
-      if: ${{ contains(matrix.ssvm-options, 'aot') }}
+    - name: Test KMeans ${{ matrix.rustwasmc-options }}
+      if: ${{ contains(matrix.rustwasmc-options, 'aot') }}
       run: |
-        rustwasmc build ${{ matrix.ssvm-options }}
-        sed -i "s/require('ssvm')/require('wasmedge-core')/" pkg/*.js
+        rustwasmc build ${{ matrix.rustwasmc-options }}
+        cd pkg && sudo npm i ${GITHUB_WORKSPACE} && cd ..
         cd node
         node app.js
         cd -
         rustwasmc clean
-      working-directory: nodejs/kmeans
+      working-directory: wasm-learning/nodejs/kmeans

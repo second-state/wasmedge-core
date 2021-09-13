@@ -1,6 +1,6 @@
 {
   "name": "wasmedge-core",
-  "version": "0.8.1",
+  "version": "0.8.2-rc.1",
   "description": "Second State WebAssembly VM for Node.js Addon",
   "keywords": [
     "wasm",
@@ -28,8 +28,7 @@
   },
   "devDependencies": {
     "mocha": "^8.1.3",
-    "node-gyp-cache": "^0.2.1",
-    "rustwasmc": "^0.1.29"
+    "node-gyp-cache": "^0.2.1"
   },
   "scripts": {
     "test": "cd test && ./test.sh",
