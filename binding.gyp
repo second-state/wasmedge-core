@@ -7,7 +7,7 @@
       "cflags_cc!": [ "-fno-exceptions", "-fno-rtti" ],
       "link_settings": {
           "libraries": [
-              "/usr/local/lib/libwasmedge_c.so",
+              "$(HOME)/.wasmedge/lib/libwasmedge_c.so",
           ],
       },
       "sources": [
@@ -20,7 +20,7 @@
       "include_dirs": [
         "<!@(node -p \"require('node-addon-api').include\")",
         "src",
-        "/usr/local/include",
+        "$(HOME)/.wasmedge/include",
       ],
       'defines': [ 'NAPI_DISABLE_CPP_EXCEPTIONS' ],
     },

@@ -1,6 +1,10 @@
 #!/bin/bash
 
 INSTALL_SCRIPT=/tmp/install_wasmedge.sh
-wget -O "$INSTALL_SCRIPT" https://github.com/second-state/WasmEdge-go/releases/download/v0.8.1/install_wasmedge.sh
-sh "$INSTALL_SCRIPT" /usr/local
-rm -f "$INSTALL_SCRIPT"
+INSTALL_PATH="$HOME/.wasmedge"
+INSTALL_VERSION=0.8.1
+SUDO=
+
+wget -O "$INSTALL_SCRIPT" "https://raw.githubusercontent.com/WasmEdge/WasmEdge/766654ee0b655a06156278854d22be8042a2c6bd/utils/install.sh"
+[ "$GITHUB_ACTIONS" == true ] && SUDO=sudo
+$SUDO bash "$INSTALL_SCRIPT" -p "$INSTALL_PATH" --version "$INSTALL_VERSION"

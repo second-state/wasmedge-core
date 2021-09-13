@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-ARCH=$1
+ARCH=$(node -e 'console.log(process.arch)')
 npm run release
 rm -rf wasmedge
 mkdir wasmedge
