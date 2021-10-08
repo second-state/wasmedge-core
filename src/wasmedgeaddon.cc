@@ -128,7 +128,6 @@ void WasmEdgeAddon::InitVM(const Napi::CallbackInfo &Info) {
     return;
   }
 
-  Store = WasmEdge_StoreCreate();
   Configure = WasmEdge_ConfigureCreate();
   Stat = WasmEdge_StatisticsCreate();
   WasmEdge_ConfigureAddProposal(Configure,
@@ -139,7 +138,7 @@ void WasmEdgeAddon::InitVM(const Napi::CallbackInfo &Info) {
                                         WasmEdge_HostRegistration_Wasi);
   WasmEdge_ConfigureAddHostRegistration(
       Configure, WasmEdge_HostRegistration_WasmEdge_Process);
-  VM = WasmEdge_VMCreate(Configure, Store);
+  VM = WasmEdge_VMCreate(Configure, nullptr);
 
   WasmEdge_LogSetErrorLevel();
 
@@ -165,7 +164,6 @@ void WasmEdgeAddon::FiniVM() {
   Stat = WasmEdge_VMGetStatisticsContext(VM);
   WasmEdge_VMDelete(VM);
   VM = nullptr;
-  WasmEdge_StoreDelete(Store);
   Store = nullptr;
   WasmEdge_ConfigureDelete(Configure);
   Configure = nullptr;
@@ -669,6 +667,7 @@ void WasmEdgeAddon::LoadWasm(const Napi::CallbackInfo &Info) {
   }
 
   // Get memory instance
+  Store = WasmEdge_VMGetStoreContext(VM);
   uint32_t MemLen = WasmEdge_StoreListMemoryLength(Store);
   WasmEdge_String MemNames[MemLen];
   WasmEdge_StoreListMemory(Store, MemNames, MemLen);
