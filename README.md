@@ -82,18 +82,6 @@ To run on MacOS you will need to build from source by following the steps mentio
 * Install WasmEdge library using the [installation script](https://github.com/WasmEdge/WasmEdge/blob/master/docs/install.md#quickstart) 
 * Install all the necessary [packages](#development-requirements)
 * Clone the `wasmedge-core` project to your local environment
-* Modify the `link_settings["libraries"]` within [binding.gyp](./binding.gyp) with the path to the WasmEdge library(dylib) 
-```gyp
-"link_settings": {
-          "libraries": [
-              "$(HOME)/.wasmedge/lib/libwasmedge_c.dylib",
-          ],
-      }
-```
-* Modify the [preinstall.sh](./scripts/preinstall.sh) script with a script that includes the support for MacOS with
-```bash
-wget -O "$INSTALL_SCRIPT" "https://raw.githubusercontent.com/WasmEdge/WasmEdge/3bc15abe573b0cb27cb88879ad80ae8285d5c6e5/utils/install.sh" 
-```
 * Run `npm install`
 
 ### Works with Rust library using Wasm-Bindgen
