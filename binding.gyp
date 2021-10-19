@@ -5,11 +5,24 @@
       "cflags_cc": [ "-std=c++17" ],
       "cflags!": [ "-fno-exceptions", "-fno-rtti" ],
       "cflags_cc!": [ "-fno-exceptions", "-fno-rtti" ],
-      "link_settings": {
-          "libraries": [
-              "$(HOME)/.wasmedge/lib/libwasmedge_c.so",
-          ],
-      },
+      "conditions": [
+           ["OS==\"mac\"",
+                { "link_settings":  {
+                      "libraries": [
+                          "$(HOME)/.wasmedge/lib/libwasmedge_c.dylib",
+                       ],
+                   },
+                }
+           ],
+            ["OS==\"linux\"",
+                { "link_settings":  {
+                       "libraries": [
+                          "$(HOME)/.wasmedge/lib/libwasmedge_c.so",
+                      ],
+                   },
+                }
+           ],
+      ], 
       "sources": [
         "src/addon.cc",
         "src/bytecode.cc",
