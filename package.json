@@ -1,6 +1,6 @@
 {
   "name": "wasmedge-core",
-  "version": "0.8.3",
+  "version": "0.9.0-rc.1",
   "description": "Second State WebAssembly VM for Node.js Addon",
   "keywords": [
     "wasm",
