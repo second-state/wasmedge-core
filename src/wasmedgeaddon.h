@@ -11,7 +11,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include <wasmedge.h>
+#include <wasmedge/wasmedge.h>
 
 class WasmEdgeAddon : public Napi::ObjectWrap<WasmEdgeAddon> {
 public:

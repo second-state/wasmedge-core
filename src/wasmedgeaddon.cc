@@ -1,7 +1,7 @@
 #include "wasmedgeaddon.h"
 
 #include <limits>
-#include <wasmedge.h>
+#include <wasmedge/wasmedge.h>
 
 #include <boost/functional/hash.hpp>
 #include <iostream>

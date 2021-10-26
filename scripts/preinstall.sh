@@ -7,7 +7,7 @@ UNINSTALL_SCRIPT_URL="https://raw.githubusercontent.com/WasmEdge/WasmEdge/master
 INSTALL_SCRIPT_PATH=/tmp/install_wasmedge.sh
 UNINSTALL_SCRIPT_PATH=/tmp/uninstall_wasmedge.sh
 INSTALL_PATH="$HOME/.wasmedge"
-INSTALL_VERSION=0.8.2
+INSTALL_VERSION=0.9.0-rc.1
 SUDO=
 [ "$GITHUB_ACTIONS" == true ] && SUDO=sudo
 
