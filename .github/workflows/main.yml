@@ -44,10 +44,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        apt update && apt install -y sudo
-        npm install --unsafe-perm -g rustwasmc
-        ln -s $(which node) /usr/local/bin/node
-        ln -s $(which npm) /usr/local/bin/npm
+        npm install --unsafe-perm -g rustwasmc mocha
 
     - name: Build wasmedge-core with ${{ matrix.cc }}
       uses: './.github/actions/build-from-source'
@@ -57,4 +54,4 @@ jobs:
 
     - name: Test wasmedge-core built with ${{ matrix.cc }}
       run: |
-        JOBS=max npm test
+        cd test && ./test.sh
