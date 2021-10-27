@@ -2,12 +2,9 @@
 
 set -xe
 
-SUDO=
-[ "$GITHUB_ACTIONS" == true ] && SUDO=sudo
-
 rustwasmc build
 cd pkg
-$SUDO npm install ../..
+npm install --unsafe-perm ../..
 cd -
 mocha js
 rustwasmc clean

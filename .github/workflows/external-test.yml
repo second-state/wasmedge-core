@@ -18,7 +18,7 @@ jobs:
       image: wasmedge/wasmedge:ubuntu2004_x86_64
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [12.x, 14.x, 16.x]
         rustwasmc-options: ['', '--enable-aot']
 
     steps:
@@ -43,10 +43,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        apt update && apt install -y sudo
         npm install --unsafe-perm -g rustwasmc
-        ln -s $(which node) /usr/local/bin/node
-        ln -s $(which npm) /usr/local/bin/npm
 
     - name: Build and install wasmedge-core
       uses: './.github/actions/build-from-source'
@@ -54,24 +51,24 @@ jobs:
     - name: Test functions ${{ matrix.rustwasmc-options }}
       run: |
         rustwasmc build ${{ matrix.rustwasmc-options }}
-        cd pkg && sudo npm i ${GITHUB_WORKSPACE} && cd ..
-        node node/app.js
+        cd pkg && npm install --unsafe-perm ${GITHUB_WORKSPACE} && cd ..
+        . $HOME/.wasmedge/env && node node/app.js
         rustwasmc clean
       working-directory: wasm-learning/nodejs/functions
 
     - name: Test JSON IO ${{ matrix.rustwasmc-options }}
       run: |
         rustwasmc build ${{ matrix.rustwasmc-options }}
-        cd pkg && sudo npm i ${GITHUB_WORKSPACE} && cd ..
-        node node/app.js
+        cd pkg && npm install --unsafe-perm ${GITHUB_WORKSPACE} && cd ..
+        . $HOME/.wasmedge/env && node node/app.js
         rustwasmc clean
       working-directory: wasm-learning/nodejs/json_io
 
     - name: Test WASI ${{ matrix.rustwasmc-options }}
       run: |
         rustwasmc build ${{ matrix.rustwasmc-options }}
-        cd pkg && sudo npm i ${GITHUB_WORKSPACE} && cd ..
-        node node/app.js
+        cd pkg && npm install --unsafe-perm ${GITHUB_WORKSPACE} && cd ..
+        . $HOME/.wasmedge/env && node node/app.js
         rustwasmc clean
       working-directory: wasm-learning/nodejs/wasi
 
@@ -79,9 +76,9 @@ jobs:
       if: ${{ contains(matrix.rustwasmc-options, 'aot') }}
       run: |
         rustwasmc build ${{ matrix.rustwasmc-options }}
-        cd pkg && sudo npm i ${GITHUB_WORKSPACE} && cd ..
+        cd pkg && npm install --unsafe-perm ${GITHUB_WORKSPACE} && cd ..
         cd node
-        node app.js
+        . $HOME/.wasmedge/env && node app.js
         cd -
         rustwasmc clean
       working-directory: wasm-learning/nodejs/kmeans
