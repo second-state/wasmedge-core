@@ -1,0 +1,68 @@
+name: Build From GitHub (npm install)
+
+on:
+  push:
+    branches:
+    - '**/test**'
+    tags:
+    - '[0-9]+.[0-9]+.[0-9]+'
+  pull_request:
+    branches:
+    - master
+
+
+jobs:
+  build_from_github:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    container:
+      image: wasmedge/wasmedge:ubuntu2004_x86_64
+    strategy:
+      matrix:
+        npm-version: [6.x, 7.x, 8.x]
+        node-version: [12.x, 14.x, 16.x]
+
+    steps:
+    - name: Checkout wasm-learning
+      uses: actions/checkout@v2
+      with:
+        repository: second-state/wasm-learning
+        path: wasm-learning
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Use npm ${{ matrix.npm-version }}
+      env:
+        NPM_VERSION: ${{ matrix.npm-version }}
+      run: |
+        npm install -g --unsafe-perm npm@$NPM_VERSION
+        npm version
+
+    - name: Set Rust to required version
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: 1.50.0
+        override: true
+
+    - name: Install dependencies
+      run: |
+        apt update && apt install -y sudo
+        npm install --unsafe-perm -g rustwasmc
+
+    - name: Build and install wasmedge-core from GitHub
+      run: |
+        npm install --unsafe-perm --build-from-source "${GITHUB_REPOSITORY}#${GITHUB_HEAD_REF}"
+
+    - name: Test functions
+      run: |
+        rustwasmc build
+        cd pkg
+        npm install --unsafe-perm --build-from-source "${GITHUB_REPOSITORY}#${GITHUB_HEAD_REF}"
+        cd ..
+        . $HOME/.wasmedge/env
+        node node/app.js
+        rustwasmc clean
+      working-directory: wasm-learning/nodejs/functions
