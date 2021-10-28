@@ -3,13 +3,13 @@ name: Build From GitHub (npm install)
 on:
   push:
     branches:
-    - '**/test**'
+      - master
+      - '**/test**'
     tags:
-    - '[0-9]+.[0-9]+.[0-9]+'
+      - '*'
   pull_request:
     branches:
-    - master
-
+      - master
 
 jobs:
   build_from_github:

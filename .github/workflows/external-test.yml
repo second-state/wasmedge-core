@@ -3,13 +3,13 @@ name: External Test
 on:
   push:
     branches:
-    - '**/test**'
+      - master
+      - '**/test**'
     tags:
-    - '[0-9]+.[0-9]+.[0-9]+'
+      - '*'
   pull_request:
     branches:
-    - master
-
+      - master
 
 jobs:
   test_wasm_learning:

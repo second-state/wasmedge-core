@@ -3,11 +3,13 @@ name: Main Workflow
 on:
   push:
     branches:
-    - master
-    - '**/test**'
+      - master
+      - '**/test**'
+    tags:
+      - '*'
   pull_request:
     branches:
-    - master
+      - master
 
 jobs:
   build_and_test:
