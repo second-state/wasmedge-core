@@ -7,6 +7,19 @@ The [WasmEdge (previously known as Second State VM, SSVM)](https://github.com/Wa
 In the current stage, our prebuilt version **only supports** x86\_64 and aarch64 Linux.
 Or you could use `--build-from-source` flag to build from the source during addon installation.
 
+## WasmEdge versions
+
+There are mappings of wasmedge-core versoins and corresponding [WasmEdge](https://github.com/WasmEdge/WasmEdge) versions:
+
+| wasmedge-core  | WasmEdge    |
+| -------------- | ----------- |
+| 0.8.1          | 0.8.1       |
+| 0.8.2-rc.1     | 0.8.1       |
+| 0.8.2          | 0.8.2       |
+| 0.8.3          | 0.8.2       |
+| 0.9.0-rc.1     | 0.9.0-rc.1  |
+| 0.9.0          | 0.9.0       |
+
 ## Development Requirements
 
 Users should install the dependencies by the following requirments:
