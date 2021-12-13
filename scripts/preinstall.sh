@@ -2,12 +2,12 @@
 
 set -e
 
-INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/WasmEdge/WasmEdge/master/utils/install.sh"
-UNINSTALL_SCRIPT_URL="https://raw.githubusercontent.com/WasmEdge/WasmEdge/master/utils/uninstall.sh"
+INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/WasmEdge/WasmEdge/0.9.0/utils/install.sh"
+UNINSTALL_SCRIPT_URL="https://raw.githubusercontent.com/WasmEdge/WasmEdge/0.9.0/utils/uninstall.sh"
 INSTALL_SCRIPT_PATH=/tmp/install_wasmedge.sh
 UNINSTALL_SCRIPT_PATH=/tmp/uninstall_wasmedge.sh
 INSTALL_PATH="$HOME/.wasmedge"
-INSTALL_VERSION=0.9.0-rc.1
+INSTALL_VERSION=0.9.0
 
 mkdir -p "$INSTALL_PATH"
 

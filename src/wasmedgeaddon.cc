@@ -209,7 +209,7 @@ void WasmEdgeAddon::InitWasi(const Napi::CallbackInfo &Info,
   }
   WasmEdge_ImportObjectInitWASI(WasiMod, WasiCmdArgs.data(), WasiCmdArgs.size(),
                                 WasiEnvs.data(), WasiEnvs.size(),
-                                WasiDirs.data(), WasiDirs.size(), nullptr, 0);
+                                WasiDirs.data(), WasiDirs.size());
 
   if (Options.isAOTMode()) {
     InitReactor(Info);
@@ -245,8 +245,8 @@ bool WasmEdgeAddon::CompileBytecodeTo(const std::string &Path) {
   BC.setFileMode();
 
   if (Options.isMeasuring()) {
-    WasmEdge_ConfigureCompilerSetCostMeasuring(Configure, true);
-    WasmEdge_ConfigureCompilerSetInstructionCounting(Configure, true);
+    WasmEdge_ConfigureStatisticsSetCostMeasuring(Configure, true);
+    WasmEdge_ConfigureStatisticsSetInstructionCounting(Configure, true);
   }
   WasmEdge_CompilerContext *CompilerCxt = WasmEdge_CompilerCreate(Configure);
   WasmEdge_Result Res =
