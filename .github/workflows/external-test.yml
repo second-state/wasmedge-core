@@ -44,6 +44,7 @@ jobs:
     - name: Install dependencies
       run: |
         npm install --unsafe-perm -g rustwasmc
+        chmod a+w /github/home/.profile
 
     - name: Build and install wasmedge-core
       uses: './.github/actions/build-from-source'
