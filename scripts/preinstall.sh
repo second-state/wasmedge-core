@@ -2,10 +2,10 @@
 
 set -e
 
-INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/WasmEdge/WasmEdge/0.9.1/utils/install.sh"
-INSTALL_SCRIPT_SHA1SUM="63730b09fc8d4f375c033446ab93fd98399c5f5e"
-UNINSTALL_SCRIPT_URL="https://raw.githubusercontent.com/WasmEdge/WasmEdge/0.9.1/utils/uninstall.sh"
-UNINSTALL_SCRIPT_SHA1SUM="9d7484d04773e2782783eaf06d4ac535c70951e6"
+INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/WasmEdge/WasmEdge/6c39907b806595f30492249ac2facc1f087c5d54/utils/install.sh"
+INSTALL_SCRIPT_SHA1SUM="abcabe72879ec928b170209c97d1e35b7ef17e22"
+UNINSTALL_SCRIPT_URL="https://raw.githubusercontent.com/WasmEdge/WasmEdge/6c39907b806595f30492249ac2facc1f087c5d54/utils/uninstall.sh"
+UNINSTALL_SCRIPT_SHA1SUM="2f9effcc2e2a171c351fd61f9e13db9211149b05"
 INSTALL_SCRIPT_PATH=/tmp/install_wasmedge.sh
 UNINSTALL_SCRIPT_PATH=/tmp/uninstall_wasmedge.sh
 INSTALL_PATH="$HOME/.wasmedge"
